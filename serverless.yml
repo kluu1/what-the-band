@@ -1,6 +1,9 @@
 service: what-the-band
 frameworkVersion: '2'
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs14.x
