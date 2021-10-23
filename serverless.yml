@@ -3,6 +3,7 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-offline
+  - serverless-bundle
 
 provider:
   name: aws

@@ -1,12 +1,16 @@
 {
   "name": "what-the-band",
   "version": "1.0.0",
-  "description": "",
+  "description": "what bands are in town?",
+  "scripts": {
+    "test": "serverless-bundle test"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "serverless-http": "^2.7.0"
   },
   "devDependencies": {
+    "serverless-bundle": "^5.0.2",
     "serverless-offline": "^8.2.0"
   }
 }

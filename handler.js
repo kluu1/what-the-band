@@ -20,4 +20,7 @@ app.use((req, res, next) => {
   });
 });
 
+// TODO: Create endpoint to see what bands are in town
+// https://app.swaggerhub.com/apis/Bandsintown/PublicAPI/3.0.0
+
 module.exports.handler = serverless(app);
