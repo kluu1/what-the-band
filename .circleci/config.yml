@@ -1,11 +1,17 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@4.7
+jobs:
+  hello-world:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: say hello world
+          command: |
+            echo "hello world!"
 
 workflows:
-  sample: 
+  my_workflow:
     jobs:
-      - node/test:
-          version: '16.10'
-          pkg-manager: npm
+      - hello-world
