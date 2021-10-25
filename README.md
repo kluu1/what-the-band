@@ -14,8 +14,15 @@ What the chuck is a small application built to obtain important Chuck Norris fac
 
 ## How to run the app locally
 
-1. npm install
-2. npm run dev (this will start serverless offline)
+### Frontend
+1. cd frontend
+2. npm i
+3. npm run start
+
+### Backend
+1. cd backend
+2. npm install
+3. npm run dev (this will start serverless offline)
 
 ## Built with
 
