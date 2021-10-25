@@ -1,4 +1,4 @@
-export interface Artist {
+export interface BaseArtist {
   id: number;
   name: string;
   url: string;
@@ -8,4 +8,8 @@ export interface Artist {
   mbid: string;
   tracker_count: number;
   upcoming_event_count: number;
+}
+
+export interface Artist extends BaseArtist {
+  id: number;
 }
