@@ -105,6 +105,10 @@ jobs:
       - checkout
       - restore_backend_cache_cmd
       - run:
+          name: Install dependencies
+          command: |
+            npm install -g serverless
+      - run:
           name: Deploy the backend
           command: |
             serverless deploy --stage production --verbose > deployment.log
