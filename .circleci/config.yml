@@ -172,11 +172,9 @@ workflows:
             branches:
               only:
                 - production
-                - main
       - deploy-frontend:
           requires: [deploy-backend]
           filters:
             branches:
               only:
                 - production
-                - main
