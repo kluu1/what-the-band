@@ -118,9 +118,7 @@ jobs:
             npm i
             serverless deploy --stage production --verbose
             BACKEND_URL=$(aws cloudformation --region us-east-1 describe-stacks --stack-name what-the-chuck-production --query "Stacks[0].Outputs[?OutputKey=='HttpApiUrl'].OutputValue" --output text)
-            echo $BACKEND_URL
             curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data ${BACKEND_URL} https://api.memstash.io/values/backend_url
-            curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backend_url
 
   deploy-frontend:
     docker:
@@ -146,9 +144,7 @@ jobs:
           command: |
             cd frontend
             BACKEND_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backend_url)
-            echo $BACKEND_URL
             echo REACT_APP_BACKEND_URL="${BACKEND_URL}" > ".env"
-            cat .env
       - run:
           name: Deploy frontend objects
           command: |
@@ -162,17 +158,16 @@ workflows:
     jobs:
       - build-backend
       - build-frontend
-      # - test-backend:
-      #     requires: [build-backend]
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      - deploy-backend:
+      - test-backend:
           requires: [build-backend]
-          # requires: [test-backend, scan-backend]
+      - test-frontend:
+          requires: [build-frontend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-backend:
+          requires: [test-backend, scan-backend]
           filters:
             branches:
               only:
