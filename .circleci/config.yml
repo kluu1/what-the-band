@@ -21,6 +21,19 @@ commands:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-${CIRCLE_WORKFLOW_ID:0:7}
+  destroy_frontend_environment:
+    description: Destroy front-end cloudformation stacks given a workflow ID
+    parameters:
+      workflow_id:
+        type: string
+        default: ${CIRCLE_WORKFLOW_ID:0:7}
+    steps:
+      - run:
+          name: Destroy frontend environment
+          when: on_fail
+          command: |
+            aws s3 rm "s3://what-the-chuck-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+            aws cloudformation delete-stack --stack-name what-the-chuck-frontend-<< parameters.workflow_id >>
 
 jobs:
   build-backend:
@@ -152,6 +165,8 @@ jobs:
             npm i
             npm run build
             aws s3 sync ./build s3://"what-the-chuck-${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy_frontend_environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   my_workflow:
