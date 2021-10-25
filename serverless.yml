@@ -1,4 +1,4 @@
-service: what-the-band
+service: what-the-chuck
 frameworkVersion: '2'
 
 plugins:

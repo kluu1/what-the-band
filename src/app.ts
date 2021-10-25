@@ -26,7 +26,7 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// TODO: Create endpoint to see what bands are in town
-// https://app.swaggerhub.com/apis/Bandsintown/PublicAPI/3.0.0
+// TODO: Create endpoints to get chuck norris facts
+// https://api.chucknorris.io/
 
 module.exports.handler = serverless(app);

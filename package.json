@@ -1,7 +1,7 @@
 {
-  "name": "what-the-band",
+  "name": "what-the-chuck",
   "version": "1.0.0",
-  "description": "what bands are in town?",
+  "description": "what chucks are in town?",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --exec serverless offline start",
