@@ -110,6 +110,7 @@ jobs:
             yum install -y gcc-c++ make
             curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
             yum install -y nodejs
+            npm install -g serverless
       - run:
           name: Deploy the backend
           command: |
