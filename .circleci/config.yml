@@ -1,29 +1,37 @@
 version: 2.1
 
+commands:
+  restore_backend_cache_cmd:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+  save_backend_cache_cmd:
+    steps:
+      - save_cache:
+          paths: [node_modules]
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
 jobs:
   build-backend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      - restore_backend_cache_cmd
       - run:
           name: Build back-end
           command: |
             npm install
             npm run build
-      - save_cache:
-          paths: [node_modules]
-          key: backend-build
+      - save_backend_cache_cmd
 
   test-backend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      - restore_backend_cache_cmd
       - run:
           name: Test back-end
           command: |
@@ -34,8 +42,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      - restore_backend_cache_cmd
       - run:
           name: Audit back-end
           command: |
