@@ -5,12 +5,22 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - backend-cache
+            - backend-${CIRCLE_WORKFLOW_ID:0:7}
   save_backend_cache_cmd:
     steps:
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-cache
+          key: backend-${CIRCLE_WORKFLOW_ID:0:7}
+  restore_frontend_cache_cmd:
+    steps:
+      - restore_cache:
+          keys:
+            - frontend-${CIRCLE_WORKFLOW_ID:0:7}
+  save_frontend_cache_cmd:
+    steps:
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
 jobs:
   build-backend:
@@ -20,12 +30,26 @@ jobs:
       - checkout
       - restore_backend_cache_cmd
       - run:
-          name: Build back-end
+          name: Build backend
           command: |
             cd backend
             npm install
             npm run build
       - save_backend_cache_cmd
+
+  build-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_frontend_cache_cmd
+      - run:
+          name: Build frontend
+          command: |
+            cd frontend
+            npm install
+            npm run build
+      - save_frontend_cache_cmd
 
   test-backend:
     docker:
@@ -39,6 +63,30 @@ jobs:
             cd backend
             npm run test
 
+  test-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_frontend_cache_cmd
+      - run:
+          name: Test frontend
+          command: |
+            cd frontend
+            npm run test
+
+  scan-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_frontend_cache_cmd
+      - run:
+          name: Audit frontend
+          command: |
+            cd frontend
+            npm audit --audit-level=critical
+
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -50,26 +98,78 @@ jobs:
           command: |
             npm audit --audit-level=critical
 
-  deploy-infrastructure:
+  deploy-backend:
     docker:
       - image: amazon/aws-cli
     steps:
       - checkout
       - restore_backend_cache_cmd
       - run:
-          name: Ensure back-end infrastructure exists
+          name: Deploy the backend
           command: |
-            serverless deploy --stage production --verbose
+            serverless deploy --stage production --verbose > deployment.log
+            cat deployment.log
+            BACKEND_URL=grep 'https' deployment.log | sed 's/ANY - //'
+            curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data ${BACKEND_URL} https://api.memstash.io/values/backend_url
+
+  deploy-frontend:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum install -y gcc-c++ make
+            curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
+            yum install -y nodejs
+      - run:
+          name: Get backend url
+          command: |
+            cd frontend
+            BACKEND_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backend_url)
+            echo $BACKEND_URL
+            echo API_URL="https://${BACKEND_URL}" > ".env"
+            cat .env
+      - run:
+          name: Deploy frontend objects
+          command: |
+            cd frontend
+            npm i
+            npm run build
+            aws s3 sync ./build s3://"what-the-chuck-${ID}"
+
+  deploy-frontend:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run:
+          name: Create S3 bucket and policies
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --tags project=what-the-chuck \
+              --stack-name what-the-chuck-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
+              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
+          name: Copy files over to S3
+          command: |
+            
 
 workflows:
   my_workflow:
     jobs:
       - build-backend
+      - build-frontend
       - test-backend:
           requires: [build-backend]
+      - test-frontend:
+          requires: [build-frontend]
       - scan-backend:
           requires: [build-backend]
-      - deploy-infrastructure:
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-backend:
           requires: [test-backend, scan-backend]
           filters:
             branches:
