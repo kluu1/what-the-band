@@ -33,4 +33,5 @@ workflows:
   my_workflow:
     jobs:
       - build-backend
-      - test-backend
+      - test-backend:
+          requires: [build-backend]
