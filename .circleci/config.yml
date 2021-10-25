@@ -163,7 +163,8 @@ workflows:
       # - scan-frontend:
       #     requires: [build-frontend]
       - deploy-backend:
-          requires: [test-backend, scan-backend]
+          requires: [build-backend]
+          # requires: [test-backend, scan-backend]
           filters:
             branches:
               only:
