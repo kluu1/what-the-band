@@ -139,23 +139,6 @@ jobs:
             npm run build
             aws s3 sync ./build s3://"what-the-chuck-${ID}"
 
-  deploy-frontend:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - run:
-          name: Create S3 bucket and policies
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --tags project=what-the-chuck \
-              --stack-name what-the-chuck-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
-              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
-      - run:
-          name: Copy files over to S3
-          command: |
-            
-
 workflows:
   my_workflow:
     jobs:
