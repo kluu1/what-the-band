@@ -14,7 +14,7 @@ jobs:
             npm install
             npm run build
       - save_cache:
-          paths: [backend/node_modules]
+          paths: [node_modules]
           key: backend-build
 
   test-backend:
@@ -29,9 +29,24 @@ jobs:
           command: |
             npm run test
 
+  scan-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Audit back-end
+          command: |
+            cd backend
+            npm audit --audit-level=critical
+
 workflows:
   my_workflow:
     jobs:
       - build-backend
       - test-backend:
+          requires: [build-backend]
+      - scan-backend:
           requires: [build-backend]
