@@ -9,7 +9,7 @@ commands:
   save_backend_cache_cmd:
     steps:
       - save_cache:
-          paths: [node_modules]
+          paths: [backend/node_modules]
           key: backend-cache
 
 jobs:
@@ -22,6 +22,7 @@ jobs:
       - run:
           name: Build back-end
           command: |
+            cd backend
             npm install
             npm run build
       - save_backend_cache_cmd
@@ -35,6 +36,7 @@ jobs:
       - run:
           name: Test back-end
           command: |
+            cd backend
             npm run test
 
   scan-backend:

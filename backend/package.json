@@ -1,0 +1,25 @@
+{
+  "name": "what-the-chuck-backend",
+  "version": "1.0.0",
+  "description": "Get Chuck Norris facts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon --exec serverless offline start",
+    "test": "serverless-bundle test src/__tests__/*"
+  },
+  "dependencies": {
+    "dotenv": "^8.6.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "^4.0.0",
+    "@types/jest": "^27.0.2",
+    "nodemon": "^2.0.14",
+    "serverless-bundle": "^5.0.2",
+    "serverless-offline": "^8.2.0"
+  }
+}
