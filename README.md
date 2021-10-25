@@ -1,6 +1,6 @@
-# Hacktoberfest 2021: What the chuck?
+# What the chuck?
 
-Small application to get Chuck Norris facts. Built with Serverless Framework, Node.js, Express.js, TypesScript, and CircleCI.
+What the chuck is a small application built to obtain important Chuck Norris facts. Created for Hacktober Fest 2021.
 
 ## How to contribute
 
@@ -16,6 +16,16 @@ Small application to get Chuck Norris facts. Built with Serverless Framework, No
 
 1. npm install
 2. npm run dev (this will start serverless offline)
+
+## Built with
+
+- Serverless Framework
+- Node.js
+- Express.js
+- TypesScript
+- CircleCI
+
+## Questions?
 
 If you have any problems/questions or issues please submit an issue and I will get to you!
 
