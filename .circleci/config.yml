@@ -48,6 +48,17 @@ jobs:
           command: |
             npm audit --audit-level=critical
 
+  deploy-infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - restore_backend_cache_cmd
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
+            serverless deploy --stage production --verbose
+
 workflows:
   my_workflow:
     jobs:
@@ -56,3 +67,9 @@ workflows:
           requires: [build-backend]
       - scan-backend:
           requires: [build-backend]
+      - deploy-infrastructure:
+          requires: [test-backend, scan-backend]
+          filters:
+            branches:
+              only:
+                - production
