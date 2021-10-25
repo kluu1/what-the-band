@@ -1,17 +1,36 @@
 version: 2.1
 
 jobs:
-  hello-world:
+  build-backend:
     docker:
-      - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build]
       - run:
-          name: say hello world
+          name: Build back-end
           command: |
-            echo "hello world!"
+            npm install
+            npm run build
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build
+
+  test-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Test back-end
+          command: |
+            npm run test
 
 workflows:
   my_workflow:
     jobs:
-      - hello-world
+      - build-backend
+      - test-backend
