@@ -134,6 +134,14 @@ jobs:
             curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
             yum install -y nodejs
       - run:
+          name: Create S3 bucket
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --tags project=what-the-chuck \
+              --stack-name what-the-chuck-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
+              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
           name: Get backend url
           command: |
             cd frontend
