@@ -5,12 +5,12 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - backend-cache
   save_backend_cache_cmd:
     steps:
       - save_cache:
           paths: [node_modules]
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: backend-cache
 
 jobs:
   build-backend:
