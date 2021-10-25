@@ -110,13 +110,11 @@ jobs:
             yum install -y gcc-c++ make
             curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
             yum install -y nodejs
-            npm config set prefix /usr/local
-            npm install -g serverless
-            npm install -g serverless-offline
       - run:
           name: Deploy the backend
           command: |
             cd backend
+            npm i
             serverless deploy --stage production --verbose
             cat deployment.log
             BACKEND_URL=grep 'https' deployment.log | sed 's/ANY - //'
