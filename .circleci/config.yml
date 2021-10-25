@@ -117,9 +117,10 @@ jobs:
             cd backend
             npm i
             serverless deploy --stage production --verbose
-            cat deployment.log
-            BACKEND_URL=grep 'https' deployment.log | sed 's/ANY - //'
+            BACKEND_URL=$(aws cloudformation --region us-east-1 describe-stacks --stack-name what-the-chuck-production --query "Stacks[0].Outputs[?OutputKey=='HttpApiUrl'].OutputValue" --output text)
+            echo $BACKEND_URL
             curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data ${BACKEND_URL} https://api.memstash.io/values/backend_url
+            curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backend_url
 
   deploy-frontend:
     docker:
