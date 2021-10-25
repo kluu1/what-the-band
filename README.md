@@ -31,6 +31,7 @@ What the chuck is a small application built to obtain important Chuck Norris fac
 - Express.js
 - TypesScript
 - CircleCI
+- React.js
 
 ## Questions?
 
