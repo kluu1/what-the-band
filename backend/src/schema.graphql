@@ -1,0 +1,11 @@
+type Query {
+  getJokes: [Joke]
+}
+
+type Joke {
+  id: String!
+  url: String!
+  value: String!
+  icon_url: String!
+  categories: [String]
+}

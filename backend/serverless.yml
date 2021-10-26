@@ -11,7 +11,10 @@ provider:
   lambdaHashingVersion: '20201221'
 
 functions:
-  api:
+  graphql:
     handler: src/app.handler
     events:
-      - httpApi: '*'
+      - http:
+          path: graphql
+          method: any
+          cors: true

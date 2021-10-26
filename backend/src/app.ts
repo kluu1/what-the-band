@@ -1,32 +1,26 @@
-import * as dotenv from 'dotenv';
-import express, { Application, Request, Response } from 'express';
-import serverless from 'serverless-http';
-import helmet from 'helmet';
+import { ApolloServer } from 'apollo-server-lambda';
+import resolvers from './resolvers';
+import fs from 'fs';
 
-const app: Application = express();
-app.use(helmet());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const typeDefs = fs.readFileSync('./src/schema.graphql', 'utf8');
 
-app.get('/', (req: Request, res: Response) => {
-  return res.status(200).json({
-    message: 'Hello from root!',
-  });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ event, context, express }) => ({
+    headers: event.headers,
+    functionName: context.functionName,
+    event,
+    context,
+    expressRequest: express.req,
+  }),
 });
 
-app.get('/hello', (req: Request, res: Response) => {
-  return res.status(200).json({
-    message: 'Hello from path!',
-  });
+export const handler = server.createHandler({
+  expressGetMiddlewareOptions: {
+    cors: {
+      origin: '*',
+      credentials: true,
+    },
+  },
 });
-
-app.use((req: Request, res: Response) => {
-  return res.status(404).json({
-    error: 'Not Found',
-  });
-});
-
-// TODO: Create endpoints to get chuck norris facts
-// https://api.chucknorris.io/
-
-module.exports.handler = serverless(app);
