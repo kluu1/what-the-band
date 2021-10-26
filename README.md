@@ -1,6 +1,6 @@
 # What the chuck?
 
-What the chuck is a small application built to obtain important Chuck Norris facts. Created for Hacktober Fest 2021.
+Created for Hacktoberfest 2021, What the chuck is a web application built to obtain important Chuck Norris facts. 
 
 ## How to contribute
 
@@ -29,10 +29,10 @@ What the chuck is a small application built to obtain important Chuck Norris fac
 
 - Serverless Framework
 - Node.js
-- Express.js
 - TypesScript
-- CircleCI
+- GraphqQL
 - React.js
+- CircleCI
 
 ## Questions?
 
