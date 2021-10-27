@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_RANDOM_JOKE } from '../queries/jokes';
 
-export default function Jokes() {
+const Jokes: React.FC<{}> = (): JSX.Element => {
   const { data, loading, error } = useQuery(GET_RANDOM_JOKE);
 
   const jokes = data?.randomJoke;
@@ -16,4 +16,4 @@ export default function Jokes() {
   );
 };
 
-
+export default Jokes;

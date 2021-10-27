@@ -1,6 +1,6 @@
 import { Box, Button, Heading, Grommet } from 'grommet';
 import { Notification } from 'grommet-icons';
-import Header from './components/Header';
+import AppBar from './components/AppBar';
 import Jokes from './components/Jokes';
 
 const theme = {
@@ -17,13 +17,13 @@ function App() {
   return (
     <Grommet theme={theme} full>
       <Box>
-        <Header>
+        <AppBar>
           {' '}
           <Heading level='3' margin='none'>
             What the chuck?
           </Heading>
           <Button icon={<Notification />} onClick={() => {}} />
-        </Header>
+        </AppBar>
       </Box>
       <Box>
         <Jokes />

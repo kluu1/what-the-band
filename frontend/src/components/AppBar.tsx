@@ -1,6 +1,6 @@
 import { Box } from 'grommet';
 
-const Header = (props) => (
+const AppBar: React.FC<{}> = (props: any): JSX.Element => (
   <Box
     tag='header'
     direction='row'
@@ -14,4 +14,4 @@ const Header = (props) => (
   />
 );
 
-export default Header
+export default AppBar;
