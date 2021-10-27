@@ -1,7 +1,7 @@
 import { Spinner } from 'grommet';
 import { useQuery } from '@apollo/client';
 import { GET_RANDOM_JOKE } from '../queries/jokes';
-import { IJoke } from '../interfaces/IJokes';
+import { IJoke } from '../interfaces/IJoke';
 
 const Jokes: React.FC<{}> = (): JSX.Element => {
   const { data, loading, error } = useQuery(GET_RANDOM_JOKE);
