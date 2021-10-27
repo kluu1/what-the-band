@@ -1,11 +1,12 @@
 import { Spinner } from 'grommet';
 import { useQuery } from '@apollo/client';
 import { GET_RANDOM_JOKE } from '../queries/jokes';
+import { IJoke } from '../interfaces/IJokes';
 
 const Jokes: React.FC<{}> = (): JSX.Element => {
   const { data, loading, error } = useQuery(GET_RANDOM_JOKE);
 
-  const jokes = data?.randomJoke;
+  const randomJoke: IJoke = data?.randomJoke;
 
   if (loading) return <Spinner message='Loading...' size='xlarge' />;
   if (error) return <p>{error.message}</p>;
@@ -13,7 +14,7 @@ const Jokes: React.FC<{}> = (): JSX.Element => {
   return (
     <>
       <h2>Random joke from Chuck Norris!</h2>
-      <pre>{JSON.stringify(jokes, null, '  ')}</pre>
+      <pre>{JSON.stringify(randomJoke, null, '  ')}</pre>
     </>
   );
 };

@@ -12,7 +12,7 @@ const theme = {
   },
 };
 
-function App() {
+const App: React.FC<{}> = (): JSX.Element => {
   return (
     <Grommet theme={theme} full>
       <Box>
@@ -28,6 +28,6 @@ function App() {
       </Box>
     </Grommet>
   );
-}
+};
 
 export default App;
