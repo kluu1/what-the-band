@@ -18,7 +18,6 @@ function App() {
     <Grommet theme={theme} full>
       <Box>
         <AppBar>
-          {' '}
           <Heading level='3' margin='none'>
             What the chuck?
           </Heading>
