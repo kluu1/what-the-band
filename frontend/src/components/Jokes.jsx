@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { GET_JOKES } from '../queries/getJokes';
+import { GET_RANDOM_JOKE } from '../queries/jokes';
 
 export default function Jokes() {
-  const { data, loading, error } = useQuery(GET_JOKES);
+  const { data, loading, error } = useQuery(GET_RANDOM_JOKE);
 
-  const jokes = data?.getJokes;
+  const jokes = data?.randomJoke;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;

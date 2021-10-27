@@ -8,7 +8,8 @@
     "test": "serverless-bundle test src/__tests__/*"
   },
   "dependencies": {
-    "apollo-server-lambda": "^3.4.0"
+    "apollo-server-lambda": "^3.4.0",
+    "axios": "^0.24.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

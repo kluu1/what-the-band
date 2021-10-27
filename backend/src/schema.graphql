@@ -1,5 +1,5 @@
 type Query {
-  getJokes: [Joke]
+  randomJoke: Joke
 }
 
 type Joke {
