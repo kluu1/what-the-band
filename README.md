@@ -32,7 +32,7 @@ Created for Hacktoberfest 2021, What the chuck is a web application built to obt
 - Serverless Framework
 - Node.js
 - TypesScript
-- GraphqQL
+- GraphQL
 - React.js
 - CircleCI
 
