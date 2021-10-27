@@ -1,3 +1,4 @@
+import { Spinner } from 'grommet';
 import { useQuery } from '@apollo/client';
 import { GET_RANDOM_JOKE } from '../queries/jokes';
 
@@ -6,11 +7,12 @@ const Jokes: React.FC<{}> = (): JSX.Element => {
 
   const jokes = data?.randomJoke;
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner message='Loading...' size='xlarge' />;
   if (error) return <p>{error.message}</p>;
 
   return (
     <>
+      <h2>Random joke from Chuck Norris!</h2>
       <pre>{JSON.stringify(jokes, null, '  ')}</pre>
     </>
   );

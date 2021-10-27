@@ -1,5 +1,4 @@
-import { Box, Button, Heading, Grommet } from 'grommet';
-import { Notification } from 'grommet-icons';
+import { Box, Heading, Grommet, Clock } from 'grommet';
 import AppBar from './components/AppBar';
 import Jokes from './components/Jokes';
 
@@ -21,10 +20,10 @@ function App() {
           <Heading level='3' margin='none'>
             What the chuck?
           </Heading>
-          <Button icon={<Notification />} onClick={() => {}} />
+          <Clock type='digital' />
         </AppBar>
       </Box>
-      <Box>
+      <Box align='center'>
         <Jokes />
       </Box>
     </Grommet>
