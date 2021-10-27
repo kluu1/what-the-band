@@ -1,6 +1,6 @@
 # What the chuck?
 
-Created for Hacktoberfest 2021, What the chuck is a web application built to obtain important Chuck Norris facts. 
+Created for Hacktoberfest 2021, What the chuck is a web application built to obtain important Chuck Norris facts.
 
 ## How to contribute
 
@@ -15,14 +15,16 @@ Created for Hacktoberfest 2021, What the chuck is a web application built to obt
 ## How to run the app locally
 
 ### Backend
+
 1. cd backend
 2. npm install
-4. npm run dev (this will start serverless offline on port 3000)
+3. npm run dev (this will start serverless offline on port 3000)
 
 ### Frontend
+
 1. cd frontend
 2. npm i
-3. echo REACT_APP_BACKEND_URL=http://localhost:3000 > .env
+3. echo REACT_APP_BACKEND_URL=http://localhost:3001/dev/graphql > .env
 4. npm run start
 
 ## Built with

@@ -4,7 +4,7 @@
   "description": "Get Chuck Norris facts",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --exec serverless offline start",
+    "dev": "nodemon --exec serverless offline start --httpPort 3001",
     "test": "serverless-bundle test src/__tests__/*"
   },
   "dependencies": {

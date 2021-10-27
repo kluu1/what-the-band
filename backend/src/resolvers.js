@@ -8,7 +8,6 @@ export default {
           id: '4Bxi-E-MQESLu-yQuZD2-g',
           url: 'https://api.chucknorris.io/jokes/4Bxi-E-MQESLu-yQuZD2-g',
           value: "The movie 'Anacondas' was filmed in Chuck Norris' pants",
-          icon_url: 'https://api.chucknorris.io/jokes/4Bxi-E-MQESLu-yQuZD2-g',
           categories: [],
         },
         {
