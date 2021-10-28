@@ -1,5 +1,8 @@
-# What the chuck?
+<p align="center">
+  <img width="200" src="approved-by-chuck.png?raw=true" alt="Sublime's custom image"/>
+</p>
 
+# WHAT THE CHUCK?
 Created for Hacktoberfest 2021, What the chuck is a web application built to obtain important Chuck Norris facts.
 
 ## How to contribute
