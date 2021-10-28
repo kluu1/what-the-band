@@ -3,6 +3,8 @@
 </p>
 
 # WHAT THE CHUCK?
+Build Status: [![CircleCI](https://circleci.com/gh/kluu1/what-the-chuck/tree/main.svg?style=svg)](https://circleci.com/gh/kluu1/what-the-chuck/tree/main)
+
 Created for Hacktoberfest 2021, What the chuck is a web application built to obtain important Chuck Norris facts.
 
 ## How to contribute
