@@ -21,7 +21,7 @@ Created for Hacktoberfest 2021, What the chuck is a web application built to obt
 
 1. cd backend
 2. npm install
-3. npm run dev (this will start serverless offline on port 3000)
+3. npm run dev (this will start serverless offline on port 3001)
 
 ### Frontend
 
