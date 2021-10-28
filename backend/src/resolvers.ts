@@ -5,8 +5,17 @@ const baseUrl = 'https://api.chucknorris.io/jokes';
 export default {
   Query: {
     randomJoke: async (_, args) => {
-      const joke = await axios.get(`${baseUrl}/random`);
-      return joke?.data;
+      const url =
+        args.category !== 'random'
+          ? `${baseUrl}/random?category=${args.category}`
+          : `${baseUrl}/random`;
+
+      try {
+        const joke = await axios.get(url);
+        return joke?.data;
+      } catch (e) {
+        console.error(`error fetching joke: ${e}`);
+      }
     },
   },
 };
