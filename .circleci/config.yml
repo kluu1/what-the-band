@@ -5,22 +5,22 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - backend-${CIRCLE_WORKFLOW_ID:0:7}
+            - backend-{{ .Environment.CIRCLE_SHA1 }}
   save_backend_cache_cmd:
     steps:
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-${CIRCLE_WORKFLOW_ID:0:7}
+          key: backend-{{ .Environment.CIRCLE_SHA1 }}
   restore_frontend_cache_cmd:
     steps:
       - restore_cache:
           keys:
-            - frontend-${CIRCLE_WORKFLOW_ID:0:7}
+            - frontend-{{ .Environment.CIRCLE_SHA1 }}
   save_frontend_cache_cmd:
     steps:
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-${CIRCLE_WORKFLOW_ID:0:7}
+          key: frontend-{{ .Environment.CIRCLE_SHA1 }}
   destroy_frontend_environment:
     description: Destroy front-end cloudformation stacks given a workflow ID
     parameters:
@@ -71,7 +71,7 @@ jobs:
       - checkout
       - restore_backend_cache_cmd
       - run:
-          name: Test back-end
+          name: Test backend
           command: |
             cd backend
             npm run test
@@ -107,7 +107,7 @@ jobs:
       - checkout
       - restore_backend_cache_cmd
       - run:
-          name: Audit back-end
+          name: Audit backend
           command: |
             npm audit --audit-level=critical
 
