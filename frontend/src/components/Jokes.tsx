@@ -1,10 +1,35 @@
-import { Spinner, Box, Main, Text } from 'grommet';
+import { useState } from 'react';
+import { Spinner, Box, Button, Select, Text } from 'grommet';
 import { useQuery } from '@apollo/client';
 import { GET_RANDOM_JOKE } from '../queries/jokes';
 import { IJoke } from '../interfaces/IJoke';
 
+const options = [
+  'random',
+  'animal',
+  'career',
+  'celebrity',
+  'dev',
+  'explicit',
+  'fashion',
+  'food',
+  'history',
+  'money',
+  'movie',
+  'music',
+  'political',
+  'religion',
+  'science',
+  'sport',
+  'travel',
+];
+
 const Jokes: React.FC<{}> = (): JSX.Element => {
-  const { data, loading, error } = useQuery(GET_RANDOM_JOKE);
+  const [value, setValue] = useState('random');
+
+  const { data, loading, error, refetch } = useQuery(GET_RANDOM_JOKE, {
+    variables: { category: value },
+  });
 
   const randomJoke: IJoke = data?.randomJoke;
 
@@ -12,11 +37,17 @@ const Jokes: React.FC<{}> = (): JSX.Element => {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <Box flex={false} direction='row-responsive' wrap>
-      <Box gap='large' flex='grow' margin='medium' align='center'>
-        <h2>Random joke from Chuck Norris!</h2>
-        <pre>{JSON.stringify(randomJoke, null, '  ')}</pre>
-      </Box>
+    <Box gap='small' flex='grow' margin='medium' align='center'>
+      <h2>Chuck Norris Facts</h2>
+      <pre>{JSON.stringify(randomJoke, null, '  ')}</pre>
+
+      <Text size='large'>Category:</Text>
+      <Select
+        options={options}
+        value={value}
+        onChange={({ option }) => setValue(option)}
+      />
+      <Button primary label='Get New Joke!' onClick={() => refetch()} />
     </Box>
   );
 };

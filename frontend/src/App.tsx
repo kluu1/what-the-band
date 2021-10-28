@@ -1,4 +1,12 @@
-import { Box, Heading, Grommet, Clock } from 'grommet';
+import {
+  Box,
+  Heading,
+  Grommet,
+  Clock,
+  Card,
+  CardBody,
+  CardFooter,
+} from 'grommet';
 import AppBar from './components/AppBar';
 import AppFooter from './components/AppFooter';
 import Jokes from './components/Jokes';
@@ -24,18 +32,15 @@ const App: React.FC<{}> = (): JSX.Element => {
           <Clock type='digital' />
         </AppBar>
         <Box flex overflow='auto' gap='medium' pad='medium' align='center'>
-          <Box
-            flex={false}
-            overflow='auto'
-            round='large'
-            background={{ color: 'dark-5', opacity: 'weak' }}
-            direction='row'
-            align='center'
-            pad={{ horizontal: 'medium', vertical: 'small' }}
-            margin={{ horizontal: 'medium', top: 'medium' }}
-          >
-            <Jokes />
-          </Box>
+          <Card background='light-2'>
+            <CardBody pad='medium'>
+              <Jokes />
+            </CardBody>
+            <CardFooter
+              pad={{ horizontal: 'small' }}
+              background='light-2'
+            ></CardFooter>
+          </Card>
         </Box>
         <AppFooter />
       </Box>
